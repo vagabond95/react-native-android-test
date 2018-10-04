@@ -27,9 +27,9 @@ public class Module extends ReactContextBaseJavaModule {
     String pluginKey = pluginSettingsJs.getString("pluginKey");
     String userId = pluginSettingsJs.getString("userId");
     String locale = pluginSettingsJs.getString("locale");
-    Boolean debugMode = pluginSettingsJs.getString("debugMode");
-    Boolean enabledTrackDefaultEvent = pluginSettingsJs.getString("enabledTrackDefaultEvent");
-    Boolean hideDefaultInAppPush = pluginSettingsJs.getString("hideDefaultInAppPush");
+    Boolean debugMode = pluginSettingsJs.getBoolean("debugMode");
+    Boolean enabledTrackDefaultEvent = pluginSettingsJs.getBoolean("enabledTrackDefaultEvent");
+    Boolean hideDefaultInAppPush = pluginSettingsJs.getBoolean("hideDefaultInAppPush");
 
     ChannelPluginSettings channelPluginSettings = ChannelPluginSettings.create(pluginKey)
         .setUserId(userId)
