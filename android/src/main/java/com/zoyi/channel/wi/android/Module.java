@@ -12,7 +12,7 @@ public class Module extends ReactContextBaseJavaModule {
 
   @Override
   public String getName() {
-    return "ChannelIOSynergy";
+    return "ChannelIO";
   }
 
   @ReactMethod
