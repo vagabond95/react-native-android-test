@@ -1,4 +1,4 @@
-package com.zoyi.channel.wi.android;
+package com.zoyi.channel.react.android;
 
 import android.annotation.SuppressLint;
 
