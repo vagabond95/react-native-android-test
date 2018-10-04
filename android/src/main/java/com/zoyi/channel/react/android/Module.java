@@ -33,7 +33,7 @@ public class Module extends ReactContextBaseJavaModule {
 
     ChannelPluginSettings channelPluginSettings = ChannelPluginSettings.create(pluginKey)
         .setUserId(userId)
-        .setLocale(Locale.fromString(locale))
+        .setLocale(CHLocale.fromString(locale))
         .setDebugMode(debugMode)
         .setEnabledTrackDefaultEvent(enabledTrackDefaultEvent)
         .setHideDefaultInAppPush(hideDefaultInAppPush);
