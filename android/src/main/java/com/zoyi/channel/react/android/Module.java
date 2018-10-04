@@ -23,15 +23,15 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void boot(ReadableMap pluginSettingsJs) {
-    String pluginKey = pluginSettingsJs.getString("pluginKey");
-    String userId = pluginSettingsJs.getString("userId");
-    String locale = pluginSettingsJs.getString("locale");
-    Boolean debugMode = pluginSettingsJs.getBoolean("debugMode");
-    Boolean enabledTrackDefaultEvent = pluginSettingsJs.getBoolean("enabledTrackDefaultEvent");
-    Boolean hideDefaultInAppPush = pluginSettingsJs.getBoolean("hideDefaultInAppPush");
+  public void boot(ReadableMap settings) {
+    String pluginKey = getString(settings, "pluginKey");
+    String userId = getString(settings, "userId");
+    String locale = getString(settings, "locale");
+    Boolean debugMode = getBoolean(settings, "debugMode");
+    Boolean enabledTrackDefaultEvent = getBoolean(settings, "enabledTrackDefaultEvent");
+    Boolean hideDefaultInAppPush = getBoolean(settings, "hideDefaultInAppPush");
 
-    ChannelPluginSettings channelPluginSettings = ChannelPluginSettings.create(pluginKey)
+    ChannelPluginSettings channelPluginSettings = new ChannelPluginSettings(pluginKey)
         .setUserId(userId)
         .setLocale(CHLocale.fromString(locale))
         .setDebugMode(debugMode)
@@ -39,6 +39,20 @@ public class Module extends ReactContextBaseJavaModule {
         .setHideDefaultInAppPush(hideDefaultInAppPush);
 
     ChannelIO.boot(channelPluginSettings);
+  }
+
+  private Boolean getBoolean(ReadableMap settings, String key) {
+    if (settings.hasKey(key)) {
+      return settings.getBoolean(key);
+    }
+    return null;
+  }
+
+  private String getString(ReadableMap settings, String key) {
+    if (settings.hasKey(key)) {
+      return settings.getString(key);
+    }
+    return null;
   }
 
   @ReactMethod
