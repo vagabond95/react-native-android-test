@@ -1,0 +1,23 @@
+{
+  "name": "channel-io-wi-synergy-sdk",
+  "version": "0.0.1",
+  "author": "ZOYI Corporation",
+  "private": false,
+  "license": "Unlicense",
+  "homepage": "https://channel-io",
+  "keywords": [
+    "react-native",
+    "android",
+    "library"
+  ],
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.38.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
