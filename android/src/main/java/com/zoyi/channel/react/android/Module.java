@@ -56,7 +56,7 @@ public class Module extends ReactContextBaseJavaModule {
             result.put("status", status);
             result.put("guest", guest);
 
-            promise.resolve(result);
+            promise.resolve(true);
             break;
 
           default:
