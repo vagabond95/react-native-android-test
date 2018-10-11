@@ -1,8 +1,13 @@
 package com.zoyi.channel.react.android;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.*;
 import com.zoyi.channel.plugin.android.*;
 import com.facebook.react.bridge.ReadableMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Module extends ReactContextBaseJavaModule {
 
@@ -68,5 +73,78 @@ public class Module extends ReactContextBaseJavaModule {
   @ReactMethod
   public void shutdown() {
     ChannelIO.shutdown();
+  }
+
+  @ReactMethod
+  public void open(boolean animated) {
+    ChannelIO.open(getCurrentActivity(), animated);
+  }
+
+  @ReactMethod
+  public void close(boolean animated) {
+    ChannelIO.close(animated);
+  }
+
+  @ReactMethod
+  public void openChat(String chatId, boolean animated) {
+    ChannelIO.openChat(getCurrentActivity(), chatId, animated);
+  }
+
+  @ReactMethod
+  public void initPushToken(String tokenData) {
+    PrefSupervisor.setDeviceToken(getCurrentActivity(), tokenData);
+  }
+
+  @ReactMethod
+  public void handlePushNotification(ReadableMap userInfo) {
+    ChannelIO.handlePushNotification(getCurrentActivity());
+  }
+
+  @ReactMethod
+  public void isChannelPushNotification(ReadableMap userInfo) {
+    
+  }
+
+  @ReactMethod
+  public void track(String name, ReadableMap eventProperty) {
+    String pluginKey = null;
+
+    if (PrefSupervisor.getPluginSetting != null) {
+      pluginKey = PrefSupervisor.getPluginSetting.getPluginKey();
+    }
+
+    Map<String, Object> eventMap = new HashMap<>();
+    ReadableMapKeySetIterator iterator = eventProperty.keySetIterator();
+
+    while (iterator.hasNextKey()) {
+      String key = iterator.nextKey();
+      ReadableType type = eventProperty.getType(key);
+
+      switch (type) {
+        case Boolean:
+          eventMap.put(key, eventProperty.getBoolean(key));
+          break;
+        case Array:
+          eventMap.put(key, eventProperty.getArray(key));
+          break;
+
+        case Number:
+          Log.e("test","test value : " + eventProperty.getString(key));
+          break;
+
+        case String:
+          eventMap.put(key, eventProperty.getString(key));
+          break;
+
+        case Map:
+          eventMap.put(key, eventProperty.getMap(key));
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    ChannelIO.track(getCurrentActivity(), pluginKey, name, eventMap);
   }
 }
