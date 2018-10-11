@@ -32,7 +32,7 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void boot(ReadableMap settings, final Callback resolve, Callback reject) {
+  public void boot(ReadableMap settings, final Promise promise) {
     String pluginKey = getString(settings, "pluginKey");
     String userId = getString(settings, "userId");
     String locale = getString(settings, "locale");
@@ -52,9 +52,15 @@ public class Module extends ReactContextBaseJavaModule {
       public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
         switch (status) {
           case SUCCESS:
-            resolve.invoke();
+            Map<String, Object> result = new HashMap<>();
+            result.put("status", status);
+            result.put("guest", guest);
+
+            promise.resolve(result);
             break;
+
           default:
+            promise.reject("reject", "status");
             break;
         }
       }
