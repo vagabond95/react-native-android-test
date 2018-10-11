@@ -1,5 +1,6 @@
 package com.zoyi.channel.react.android;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.react.bridge.*;
@@ -29,7 +30,7 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void boot(ReadableMap settings) {
+  public void boot(ReadableMap settings, final Callback resolve, Callback reject) {
     String pluginKey = getString(settings, "pluginKey");
     String userId = getString(settings, "userId");
     String locale = getString(settings, "locale");
@@ -44,7 +45,18 @@ public class Module extends ReactContextBaseJavaModule {
         .setEnabledTrackDefaultEvent(enabledTrackDefaultEvent)
         .setHideDefaultInAppPush(hideDefaultInAppPush);
 
-    ChannelIO.boot(channelPluginSettings);
+    ChannelIO.boot(channelPluginSettings, new OnBootListener() {
+      @Override
+      public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
+        switch (status) {
+          case SUCCESS:
+            resolve.invoke();
+            break;
+          default:
+            break;
+        }
+      }
+    });
   }
 
   private Boolean getBoolean(ReadableMap settings, String key) {
@@ -102,7 +114,7 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void isChannelPushNotification(ReadableMap userInfo) {
+  public void isChannelPushNotification(ReadableMap userInfo, Callback resolve, Callback reject) {
     
   }
 
