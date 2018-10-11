@@ -122,8 +122,20 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void isChannelPushNotification(ReadableMap userInfo, Callback resolve, Callback reject) {
-    
+  public void isChannelPushNotification(ReadableMap userInfo, Promise promise) {
+    Map<String, String> message = new HashMap<>();
+    ReadableMapKeySetIterator iterator = userInfo.keySetIterator();
+
+    while (iterator.hasNextKey()) {
+      String key = iterator.nextKey();
+      message.put(key, userInfo.getString(key));
+    }
+
+    if (ChannelIO.isChannelPushNotification(message)) {
+      promise.resolve(true);
+    } else {
+      promise.resolve(false);
+    }
   }
 
   @ReactMethod
@@ -150,7 +162,7 @@ public class Module extends ReactContextBaseJavaModule {
           break;
 
         case Number:
-          Log.e("test","test value : " + eventProperty.getString(key));
+          //Log.e("test","test value : " + eventProperty.getString(key));
           break;
 
         case String:
