@@ -26,9 +26,10 @@ public class Module extends ReactContextBaseJavaModule {
     return "ChannelIO";
   }
 
-  @ReactMethod
-  public void getDeviceId(Callback callback) {
-    callback.invoke(Utils.getWId());
+  @Override
+  public Map<String, Object> getConstants() {
+    final Map<String, Object> constants = new HashMap<>();
+    return super.getConstants();
   }
 
   @ReactMethod
@@ -50,17 +51,24 @@ public class Module extends ReactContextBaseJavaModule {
     ChannelIO.boot(channelPluginSettings, new OnBootListener() {
       @Override
       public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
+        WritableMap result = Arguments.createMap();
+
         switch (status) {
           case SUCCESS:
-            Map<String, Object> result = new HashMap<>();
-            result.put("status", status);
-            result.put("guest", guest);
 
-            promise.resolve(true);
+            if (guest != null) {
+              result.putMap("guest", Utils.parseGuest(guest));
+            } else {
+              result.putNull("guest");
+            }
+
+            result.putString("status", status.toString());
+            promise.resolve(result);
             break;
 
           default:
-            promise.reject("reject", status.toString());
+            result.putString("status", status.toString());
+            promise.resolve(result);
             break;
         }
       }
