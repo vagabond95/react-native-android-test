@@ -34,12 +34,16 @@ public class Module extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void boot(ReadableMap settings, final Promise promise) {
-    String pluginKey = getString(settings, "pluginKey");
-    String userId = getString(settings, "userId");
-    String locale = getString(settings, "locale");
-    Boolean debugMode = getBoolean(settings, "debugMode");
-    Boolean enabledTrackDefaultEvent = getBoolean(settings, "enabledTrackDefaultEvent");
-    Boolean hideDefaultInAppPush = getBoolean(settings, "hideDefaultInAppPush");
+    String pluginKey = Utils.getString(settings, "pluginKey");
+    String userId = Utils.getString(settings, "userId");
+    String locale = Utils.getString(settings, "locale");
+
+    Boolean debugMode = Utils.getBoolean(settings, "debugMode");
+    Boolean enabledTrackDefaultEvent = Utils.getBoolean(settings, "enabledTrackDefaultEvent");
+    Boolean hideDefaultInAppPush = Utils.getBoolean(settings, "hideDefaultInAppPush");
+
+    ReadableMap launcherConfig = Utils.getMap(settings, "launcherConfig");
+    ReadableMap profile = Utils.getMap(settings, "profile");
 
     ChannelPluginSettings channelPluginSettings = new ChannelPluginSettings(pluginKey)
         .setUserId(userId)
@@ -73,20 +77,6 @@ public class Module extends ReactContextBaseJavaModule {
         }
       }
     });
-  }
-
-  private Boolean getBoolean(ReadableMap settings, String key) {
-    if (settings.hasKey(key)) {
-      return settings.getBoolean(key);
-    }
-    return null;
-  }
-
-  private String getString(ReadableMap settings, String key) {
-    if (settings.hasKey(key)) {
-      return settings.getString(key);
-    }
-    return null;
   }
 
   @ReactMethod
@@ -154,38 +144,6 @@ public class Module extends ReactContextBaseJavaModule {
       pluginKey = PrefSupervisor.getPluginSetting(getCurrentActivity()).getPluginKey();
     }
 
-    Map<String, Object> eventMap = new HashMap<>();
-    ReadableMapKeySetIterator iterator = eventProperty.keySetIterator();
-
-    while (iterator.hasNextKey()) {
-      String key = iterator.nextKey();
-      ReadableType type = eventProperty.getType(key);
-
-      switch (type) {
-        case Boolean:
-          eventMap.put(key, eventProperty.getBoolean(key));
-          break;
-        case Array:
-          eventMap.put(key, eventProperty.getArray(key));
-          break;
-
-        case Number:
-          //Log.e("test","test value : " + eventProperty.getString(key));
-          break;
-
-        case String:
-          eventMap.put(key, eventProperty.getString(key));
-          break;
-
-        case Map:
-          eventMap.put(key, eventProperty.getMap(key));
-          break;
-
-        default:
-          break;
-      }
-    }
-
-    ChannelIO.track(getCurrentActivity(), pluginKey, name, eventMap);
+    ChannelIO.track(getCurrentActivity(), pluginKey, name, Utils.toMap(eventProperty));
   }
 }
