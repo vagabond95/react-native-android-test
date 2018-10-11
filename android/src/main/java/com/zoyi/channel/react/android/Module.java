@@ -41,17 +41,18 @@ public class Module extends ReactContextBaseJavaModule {
     Boolean enabledTrackDefaultEvent = Utils.getBoolean(settings, "enabledTrackDefaultEvent");
     Boolean hideDefaultInAppPush = Utils.getBoolean(settings, "hideDefaultInAppPush");
 
-    ReadableMap launcherConfig = Utils.getMap(settings, "launcherConfig");
-    ReadableMap profile = Utils.getMap(settings, "profile");
+    ReadableMap launcherConfig = Utils.getReadableMap(settings, "launcherConfig");
+    ReadableMap profile = Utils.getReadableMap(settings, "profile");
 
     ChannelPluginSettings channelPluginSettings = new ChannelPluginSettings(pluginKey)
         .setUserId(userId)
         .setLocale(CHLocale.fromString(locale))
         .setDebugMode(debugMode)
         .setEnabledTrackDefaultEvent(enabledTrackDefaultEvent)
-        .setHideDefaultInAppPush(hideDefaultInAppPush);
+        .setHideDefaultInAppPush(hideDefaultInAppPush)
+        .setLauncherConfig(ConvertUtils.toLauncherConfig(launcherConfig));
 
-    ChannelIO.boot(channelPluginSettings, new OnBootListener() {
+    ChannelIO.boot(channelPluginSettings, ConvertUtils.toProfile(profile), new OnBootListener() {
       @Override
       public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
         WritableMap result = Arguments.createMap();
@@ -60,7 +61,7 @@ public class Module extends ReactContextBaseJavaModule {
           case SUCCESS:
 
             if (guest != null) {
-              result.putMap("guest", Utils.guestToMap(guest));
+              result.putMap("guest", ConvertUtils.guestToMap(guest));
             } else {
               result.putNull("guest");
             }
@@ -85,7 +86,7 @@ public class Module extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void hide() {
-    ChannelIO.show();
+    ChannelIO.hide();
   }
 
   @ReactMethod
@@ -143,6 +144,6 @@ public class Module extends ReactContextBaseJavaModule {
       pluginKey = PrefSupervisor.getPluginSetting(getCurrentActivity()).getPluginKey();
     }
 
-    ChannelIO.track(getCurrentActivity(), pluginKey, name, Utils.toMap(eventProperty));
+    ChannelIO.track(getCurrentActivity(), pluginKey, name, ConvertUtils.toHashMap(eventProperty));
   }
 }
