@@ -60,7 +60,7 @@ public class Module extends ReactContextBaseJavaModule {
             break;
 
           default:
-            promise.reject("reject", "status");
+            promise.reject("reject", "JerryTest please pase me!");
             break;
         }
       }
