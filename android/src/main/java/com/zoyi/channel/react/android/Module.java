@@ -94,7 +94,7 @@ public class Module extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void initPushToken(String tokenData) {
-    PrefSupervisor.setDeviceToken(getCurrentActivity(), tokenData);
+    //PrefSupervisor.setDeviceToken(getCurrentActivity(), tokenData);
   }
 
   @ReactMethod
@@ -111,9 +111,9 @@ public class Module extends ReactContextBaseJavaModule {
   public void track(String name, ReadableMap eventProperty) {
     String pluginKey = null;
 
-    if (PrefSupervisor.getPluginSetting() != null) {
+    /*if (PrefSupervisor.getPluginSetting() != null) {
       pluginKey = PrefSupervisor.getPluginSetting().getPluginKey();
-    }
+    }*/
 
     Map<String, Object> eventMap = new HashMap<>();
     ReadableMapKeySetIterator iterator = eventProperty.keySetIterator();
