@@ -60,7 +60,7 @@ public class Module extends ReactContextBaseJavaModule {
           case SUCCESS:
 
             if (guest != null) {
-              result.putMap("guest", Utils.parseGuest(guest));
+              result.putMap("guest", Utils.guestToMap(guest));
             } else {
               result.putNull("guest");
             }
