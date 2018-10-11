@@ -3,6 +3,7 @@ package com.zoyi.channel.react.android;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
@@ -25,6 +26,7 @@ public class Utils {
     if (readableMap.hasKey(key)) {
       return readableMap.getDouble(key);
     }
+
     return 0.0;
   }
 
@@ -32,6 +34,7 @@ public class Utils {
     if (readableMap.hasKey(key)) {
       return getDouble(readableMap, key).floatValue();
     }
+
     return 0f;
   }
 
@@ -39,13 +42,15 @@ public class Utils {
     if (readableMap.hasKey(key)) {
       return readableMap.getBoolean(key);
     }
-    return null;
+
+    return false;
   }
 
   public static String getString(ReadableMap readableMap, String key) {
     if (readableMap.hasKey(key)) {
       return readableMap.getString(key);
     }
+
     return null;
   }
 
@@ -53,6 +58,15 @@ public class Utils {
     if (readableMap.hasKey(key)) {
       return readableMap.getMap(key);
     }
+
+    return null;
+  }
+
+  public static ReadableArray getReadableArray(ReadableMap readableMap, String key) {
+    if (readableMap.hasKey(key)) {
+      return readableMap.getArray(key);
+    }
+
     return null;
   }
 

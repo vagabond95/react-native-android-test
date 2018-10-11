@@ -107,22 +107,22 @@ public class ConvertUtils {
 
       switch (type) {
         case Boolean:
-          hashMap.put(key, readableMap.getBoolean(key));
+          hashMap.put(key, Utils.getBoolean(readableMap, key));
           break;
         case Array:
-          hashMap.put(key, readableMap.getArray(key));
+          hashMap.put(key, Utils.getArray(readableMap, key));
           break;
 
         case Number:
-          Log.e("test", "test value : " + readableMap.getString(key));
+          Log.e("test", "test value : " + Utils.getString(readableMap, key));
           break;
 
         case String:
-          hashMap.put(key, readableMap.getString(key));
+          hashMap.put(key, Utils.getString(readableMap, key));
           break;
 
         case Map:
-          hashMap.put(key, readableMap.getMap(key));
+          hashMap.put(key, Utils.getReadableMap(readableMap, key));
           break;
 
         default:
@@ -172,20 +172,20 @@ public class ConvertUtils {
           Utils.getFloat(launcherConfigMap, "xMargin"),
           Utils.getFloat(launcherConfigMap, "yMargin"));
     }
-    
+
     return null;
   }
 
   public static Profile toProfile(ReadableMap profileMap) {
     if (profileMap != null) {
       Profile profile = Profile.create()
-          .setName(profileMap.getString("name"))
-          .setEmail(profileMap.getString("email"))
-          .setMobileNumber(profileMap.getString("mobileNumber"))
-          .setAvatarUrl(profileMap.getString("avatarUrl"));
+          .setName(Utils.getString(profileMap, "name"))
+          .setEmail(Utils.getString(profileMap, "email"))
+          .setMobileNumber(Utils.getString(profileMap, "mobileNumber"))
+          .setAvatarUrl(Utils.getString(profileMap, "avatarUrl"));
 
       Iterator propertyIterator = ConvertUtils
-          .toHashMap(profileMap.getMap("property"))
+          .toHashMap(Utils.getReadableMap(profileMap, "property"))
           .entrySet()
           .iterator();
 
