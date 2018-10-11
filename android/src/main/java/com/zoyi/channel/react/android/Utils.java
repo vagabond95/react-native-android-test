@@ -1,6 +1,5 @@
 package com.zoyi.channel.react.android;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -12,11 +11,8 @@ import com.facebook.react.bridge.WritableMap;
 import com.zoyi.channel.plugin.android.model.entity.Guest;
 import com.zoyi.channel.plugin.android.*;
 
-import java.net.NetworkInterface;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -118,7 +114,7 @@ public class Utils {
           break;
 
         case Number:
-          Log.e("test","test value : " + readableMap.getString(key));
+          Log.e("test", "test value : " + readableMap.getString(key));
           break;
 
         case String:
@@ -164,11 +160,20 @@ public class Utils {
           .setMobileNumber(profileMap.getString("mobileNumber"))
           .setAvatarUrl(profileMap.getString("avatarUrl"));
 
-      ReadableMap propertyMap = profileMap.getMap("property");
+      Iterator propertyIterator = Utils
+          .toMap(profileMap.getMap("property"))
+          .entrySet()
+          .iterator();
 
-      if (propertyMap != null) {
-        profile.setProperty(Utils.toMap(propertyMap));
+      while (propertyIterator.hasNext()) {
+        Map.Entry pair = (Map.Entry) propertyIterator.next();
+        Object value = pair.getValue();
+
+        profile.setProperty((String) pair.getKey(), value);
+
+        propertyIterator.remove();
       }
+
 
       return profile;
     }

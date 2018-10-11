@@ -1,7 +1,6 @@
 package com.zoyi.channel.react.android;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.facebook.react.bridge.*;
 import com.zoyi.channel.plugin.android.*;
