@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.facebook.react.bridge.*;
 import com.zoyi.channel.plugin.android.*;
+import com.zoyi.channel.plugin.android.global;
+
 import com.facebook.react.bridge.ReadableMap;
 
 import java.util.HashMap;
