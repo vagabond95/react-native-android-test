@@ -110,7 +110,7 @@ public class ConvertUtils {
           hashMap.put(key, Utils.getBoolean(readableMap, key));
           break;
         case Array:
-          hashMap.put(key, Utils.getArray(readableMap, key));
+          hashMap.put(key, Utils.getReadableArray(readableMap, key));
           break;
 
         case Number:
