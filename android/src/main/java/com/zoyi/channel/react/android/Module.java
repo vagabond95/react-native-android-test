@@ -124,8 +124,8 @@ public class Module extends ReactContextBaseJavaModule {
   public void track(String name, ReadableMap eventProperty) {
     String pluginKey = null;
 
-    if (PrefSupervisor.getPluginSetting() != null) {
-      pluginKey = PrefSupervisor.getPluginSetting().getPluginKey();
+    if (PrefSupervisor.getPluginSetting(getCurrentActivity()) != null) {
+      pluginKey = PrefSupervisor.getPluginSetting(getCurrentActivity()).getPluginKey();
     }
 
     Map<String, Object> eventMap = new HashMap<>();
