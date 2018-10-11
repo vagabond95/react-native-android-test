@@ -63,12 +63,12 @@ public class Module extends ReactContextBaseJavaModule {
             }
 
             result.putString("status", status.toString());
-            promise.resolve(true);
+            promise.resolve(result);
             break;
 
           default:
             result.putString("status", status.toString());
-            promise.resolve(false);
+            promise.resolve(result);
             break;
         }
       }
