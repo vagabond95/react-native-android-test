@@ -1,5 +1,6 @@
 package com.zoyi.channel.react.android;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -217,6 +218,23 @@ public class ConvertUtils {
     }
 
     return pushNotification;
+  }
+
+  public static WritableMap getBootResult(
+      ChannelPluginListener listener,
+      ChannelPluginCompletionStatus status,
+      @Nullable Guest guest) {
+
+    WritableMap result = Arguments.createMap();
+
+    if (status == ChannelPluginCompletionStatus.SUCCESS) {
+      ChannelIO.setChannelPluginListener(listener);
+      result.putMap(Const.KEY_GUEST, ConvertUtils.guestToWritableMap(guest));
+    }
+
+    result.putString(Const.KEY_STATUS, status.toString());
+
+    return result;
   }
 
   public static WritableMap guestToWritableMap(Guest guest) {
