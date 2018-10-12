@@ -189,6 +189,10 @@ public class ConvertUtils {
           .entrySet()
           .iterator();
 
+      Log.d("profile test", ConvertUtils
+          .toHashMap(Utils.getReadableMap(profileMap, "property"))
+          .toString());
+
       while (propertyIterator.hasNext()) {
         Map.Entry pair = (Map.Entry) propertyIterator.next();
         Object value = pair.getValue();
