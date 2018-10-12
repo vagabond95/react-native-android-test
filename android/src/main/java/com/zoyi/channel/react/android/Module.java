@@ -160,12 +160,12 @@ public class Module extends ReactContextBaseJavaModule implements ChannelPluginL
 
   @Override
   public void willShowMessenger() {
-    Utils.sendEvent(reactContext, "willShowMessenger", null);
+    Utils.sendEvent(reactContext, "WillShowMessenger", null);
   }
 
   @Override
   public void willHideMessenger() {
-    Utils.sendEvent(reactContext, "willHideMessenger", null);
+    Utils.sendEvent(reactContext, "WillHideMessenger", null);
   }
 
   @Override
@@ -173,7 +173,7 @@ public class Module extends ReactContextBaseJavaModule implements ChannelPluginL
     WritableMap writableMap = Arguments.createMap();
     writableMap.putInt("count", count);
 
-    Utils.sendEvent(reactContext, "onChangeBadge", writableMap);
+    Utils.sendEvent(reactContext, "OnChangeBadge", writableMap);
   }
 
   @Override
@@ -185,7 +185,7 @@ public class Module extends ReactContextBaseJavaModule implements ChannelPluginL
       writableMap.putString("senderName", pushEvent.getSenderName());
       writableMap.putString("message", pushEvent.getMessage());
 
-      Utils.sendEvent(reactContext, "onReceivePush", writableMap);
+      Utils.sendEvent(reactContext, "OnReceivePush", writableMap);
     }
   }
 
@@ -194,7 +194,7 @@ public class Module extends ReactContextBaseJavaModule implements ChannelPluginL
     WritableMap writableMap = Arguments.createMap();
     writableMap.putString("url", url);
 
-    Utils.sendEvent(reactContext, "onClickChatLink", writableMap);
+    Utils.sendEvent(reactContext, "OnClickChatLink", writableMap);
     return handleChatLink;
   }
 }
