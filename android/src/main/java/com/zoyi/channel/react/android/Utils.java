@@ -77,8 +77,8 @@ public class Utils {
   public static String getPluginKey(Context context) {
     String pluginKey = null;
 
-    if (PrefSupervisor.getPluginSetting(getCurrentActivity()) != null) {
-      pluginKey = PrefSupervisor.getPluginSetting(getCurrentActivity()).getPluginKey();
+    if (PrefSupervisor.getPluginSetting(context) != null) {
+      pluginKey = PrefSupervisor.getPluginSetting(context).getPluginKey();
     }
 
     return pluginKey;

@@ -10,6 +10,7 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
 import com.zoyi.channel.plugin.android.model.entity.Guest;
+import com.zoyi.channel.plugin.android.model.etc.*;
 import com.zoyi.channel.plugin.android.*;
 
 import java.util.HashMap;

@@ -40,7 +40,7 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
           public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
             WritableMap result = Arguments.createMap();
 
-            if (status = ChannelPluginCompletionStatus.SUCCESS) {
+            if (status == ChannelPluginCompletionStatus.SUCCESS) {
               ChannelIO.setChannelPluginListener(RNChannelIO.this);
               result.putMap(Const.KEY_GUEST, ConvertUtils.guestToWritableMap(guest));
             }
