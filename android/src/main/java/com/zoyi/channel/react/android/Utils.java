@@ -15,6 +15,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.zoyi.channel.plugin.android.model.entity.Guest;
 import com.zoyi.channel.plugin.android.*;
+import com.zoyi.channel.plugin.android.global.*;
 
 import java.util.HashMap;
 import java.util.Iterator;

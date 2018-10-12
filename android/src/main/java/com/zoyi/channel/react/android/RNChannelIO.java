@@ -34,7 +34,7 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
   public void boot(ReadableMap settings, final Promise promise) {
     ChannelIO.boot(
         ConvertUtils.toChannelPluginSettings(settings),
-        ConvertUtils.toProfile(profile),
+        ConvertUtils.toProfile(Utils.getReadableMap(settings, Const.KEY_PROFILE)),
         new OnBootListener() {
           @Override
           public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
