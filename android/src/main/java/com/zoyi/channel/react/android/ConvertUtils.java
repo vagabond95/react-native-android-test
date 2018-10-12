@@ -190,10 +190,6 @@ public class ConvertUtils {
           .entrySet()
           .iterator();
 
-      Log.d("profile test", ConvertUtils
-          .toHashMap(Utils.getReadableMap(profileMap, "property"))
-          .toString());
-
       while (propertyIterator.hasNext()) {
         Map.Entry pair = (Map.Entry) propertyIterator.next();
         Object value = pair.getValue();
@@ -203,7 +199,7 @@ public class ConvertUtils {
         propertyIterator.remove();
       }
 
-
+      Log.d("toProfile", profile.toString());
       return profile;
     }
     return null;
