@@ -199,7 +199,11 @@ public class ConvertUtils {
         propertyIterator.remove();
       }
 
-      Log.d("toProfile", profile.toString());
+      Log.d("toProfile name", profile.getName())
+      Log.d("toProfile email", profile.getEmail())
+      Log.d("toProfile mobilenumber", profile.getMobileNumber())
+      Log.d("toProfile avatar", profile.getAvatarUrl())
+      Log.d("toProfile property", profile.getProperty().toString());
       return profile;
     }
     return null;
