@@ -8,16 +8,21 @@ import com.zoyi.channel.plugin.android.global.*;
 import com.zoyi.channel.plugin.android.model.entity.*;
 
 import com.facebook.react.bridge.ReadableMap;
+import com.zoyi.channel.plugin.android.model.etc.PushEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Module extends ReactContextBaseJavaModule {
+public class Module extends ReactContextBaseJavaModule implements ChannelPluginListener {
 
   private boolean debug = false;
+  private boolean handleChatLink = false;
+
+  private ReactContext reactContext;
 
   public Module(ReactApplicationContext reactContext) {
     super(reactContext);
+    this.reactContext = reactContext;
   }
 
   @Override
@@ -59,6 +64,7 @@ public class Module extends ReactContextBaseJavaModule {
 
         switch (status) {
           case SUCCESS:
+            ChannelIO.setChannelPluginListener(Module.this);
 
             if (guest != null) {
               result.putMap("guest", ConvertUtils.guestToMap(guest));
@@ -145,5 +151,50 @@ public class Module extends ReactContextBaseJavaModule {
     }
 
     ChannelIO.track(getCurrentActivity(), pluginKey, name, ConvertUtils.toHashMap(eventProperty));
+  }
+
+  @ReactMethod
+  public void setHandleChatLink(boolean handleChatLink) {
+    this.handleChatLink = handleChatLink;
+  }
+
+  @Override
+  public void willShowMessenger() {
+    Utils.sendEvent(reactContext, "willShowMessenger", null);
+  }
+
+  @Override
+  public void willHideMessenger() {
+    Utils.sendEvent(reactContext, "willHideMessenger", null);
+  }
+
+  @Override
+  public void onChangeBadge(int count) {
+    WritableMap writableMap = Arguments.createMap();
+    writableMap.putInt("count", count);
+
+    Utils.sendEvent(reactContext, "onChangeBadge", writableMap);
+  }
+
+  @Override
+  public void onReceivePush(PushEvent pushEvent) {
+    if (pushEvent != null) {
+      WritableMap writableMap = Arguments.createMap();
+      writableMap.putString("chatId", pushEvent.getChatId());
+      writableMap.putString("senderAvatarUrl", pushEvent.getSenderAvatarUrl());
+      writableMap.putString("senderName", pushEvent.getSenderName());
+      writableMap.putString("message", pushEvent.getMessage());
+
+      Utils.sendEvent(reactContext, "onReceivePush", writableMap);
+    }
+  }
+
+  @Override
+  public boolean onClickChatLink(String url) {
+    WritableMap writableMap = Arguments.createMap();
+    writableMap.putString("url", url);
+
+    Utils.sendEvent(reactContext, "onClickChatLink", writableMap);
+    return handleChatLink;
   }
 }

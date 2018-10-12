@@ -1,14 +1,17 @@
 package com.zoyi.channel.react.android;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.zoyi.channel.plugin.android.model.entity.Guest;
 import com.zoyi.channel.plugin.android.*;
 
@@ -70,4 +73,9 @@ public class Utils {
     return null;
   }
 
+  public static void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+    reactContext
+        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+        .emit(eventName, params);
+  }
 }
