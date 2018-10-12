@@ -105,6 +105,7 @@ public class ConvertUtils {
       String key = iterator.nextKey();
       ReadableType type = readableMap.getType(key);
 
+      Log.d("toHashMap", "key : " + key + " type : " + type);
       switch (type) {
         case Boolean:
           hashMap.put(key, Utils.getBoolean(readableMap, key));
@@ -114,7 +115,7 @@ public class ConvertUtils {
           break;
 
         case Number:
-          Log.e("test", "test value : " + Utils.getString(readableMap, key));
+          hashMap.put(key, Utils.getDouble(readableMap, key));
           break;
 
         case String:
