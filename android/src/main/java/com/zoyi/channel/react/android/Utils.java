@@ -1,5 +1,6 @@
 package com.zoyi.channel.react.android;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -71,6 +72,16 @@ public class Utils {
     }
 
     return null;
+  }
+
+  public static String getPluginKey(Context context) {
+    String pluginKey = null;
+
+    if (PrefSupervisor.getPluginSetting(getCurrentActivity()) != null) {
+      pluginKey = PrefSupervisor.getPluginSetting(getCurrentActivity()).getPluginKey();
+    }
+
+    return pluginKey;
   }
 
   public static void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
