@@ -77,7 +77,7 @@ public class Module extends ReactContextBaseJavaModule implements ChannelPluginL
             break;
 
           default:
-            result.putString("status", status.toString());
+            result.putString("status", status.name());
             promise.resolve(result);
             break;
         }
