@@ -5,4 +5,4 @@ import axios from 'axios'
 
 // name as defined via ReactContextBaseJavaModule's getName
 
-module.exports = NativeModules.ChannelIO
+module.exports = NativeModules.RNChannelIO
