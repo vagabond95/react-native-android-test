@@ -1,7 +1,6 @@
 package com.zoyi.channel.react.android;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
@@ -22,7 +21,7 @@ import java.util.Map;
  * Created by jerry on 2018. 10. 11..
  */
 
-public class ConvertUtils {
+public class ParseUtils {
 
   public static WritableArray toWritableArray(Object[] array) {
     WritableArray writableArray = Arguments.createArray();
@@ -168,7 +167,7 @@ public class ConvertUtils {
           .setMobileNumber(Utils.getString(profileMap, Const.KEY_MOBILE_NUMBER))
           .setAvatarUrl(Utils.getString(profileMap, Const.KEY_AVATAR_URL));
 
-      Iterator propertyIterator = ConvertUtils
+      Iterator propertyIterator = ParseUtils
           .toHashMap(Utils.getReadableMap(profileMap, Const.KEY_PROPERTY))
           .entrySet()
           .iterator();
@@ -205,7 +204,7 @@ public class ConvertUtils {
         .setDebugMode(debugMode)
         .setEnabledTrackDefaultEvent(enabledTrackDefaultEvent)
         .setHideDefaultInAppPush(hideDefaultInAppPush)
-        .setLauncherConfig(ConvertUtils.toLauncherConfig(launcherConfig));
+        .setLauncherConfig(ParseUtils.toLauncherConfig(launcherConfig));
   }
 
   public static Map<String, String> toPushNotification(ReadableMap pushNotificationMap) {
@@ -229,7 +228,7 @@ public class ConvertUtils {
 
     if (status == ChannelPluginCompletionStatus.SUCCESS) {
       ChannelIO.setChannelPluginListener(listener);
-      result.putMap(Const.KEY_GUEST, ConvertUtils.guestToWritableMap(guest));
+      result.putMap(Const.KEY_GUEST, ParseUtils.guestToWritableMap(guest));
     }
 
     result.putString(Const.KEY_STATUS, status.toString());

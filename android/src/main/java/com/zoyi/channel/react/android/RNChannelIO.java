@@ -10,9 +10,6 @@ import com.zoyi.channel.plugin.android.model.entity.*;
 import com.facebook.react.bridge.ReadableMap;
 import com.zoyi.channel.plugin.android.model.etc.PushEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPluginListener {
 
   private boolean debug = false;
@@ -33,12 +30,12 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
   @ReactMethod
   public void boot(ReadableMap settings, final Promise promise) {
     ChannelIO.boot(
-        ConvertUtils.toChannelPluginSettings(settings),
-        ConvertUtils.toProfile(Utils.getReadableMap(settings, Const.KEY_PROFILE)),
+        ParseUtils.toChannelPluginSettings(settings),
+        ParseUtils.toProfile(Utils.getReadableMap(settings, Const.KEY_PROFILE)),
         new OnBootListener() {
           @Override
           public void onCompletion(ChannelPluginCompletionStatus status, @Nullable Guest guest) {
-            promise.resolve(ConvertUtils.getBootResult(RNChannelIO.this, status, guest));
+            promise.resolve(ParseUtils.getBootResult(RNChannelIO.this, status, guest));
           }
         });
   }
@@ -85,7 +82,7 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
 
   @ReactMethod
   public void isChannelPushNotification(ReadableMap userInfo, Promise promise) {
-    if (ChannelIO.isChannelPushNotification(ConvertUtils.toPushNotification(userInfo))) {
+    if (ChannelIO.isChannelPushNotification(ParseUtils.toPushNotification(userInfo))) {
       promise.resolve(true);
     } else {
       promise.resolve(false);
@@ -94,7 +91,7 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
 
   @ReactMethod
   public void track(String name, ReadableMap eventProperty) {
-    ChannelIO.track(getCurrentActivity(), Utils.getPluginKey(getCurrentActivity()), name, ConvertUtils.toHashMap(eventProperty));
+    ChannelIO.track(getCurrentActivity(), Utils.getPluginKey(getCurrentActivity()), name, ParseUtils.toHashMap(eventProperty));
   }
 
   @ReactMethod
@@ -114,17 +111,17 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
 
   @Override
   public void onChangeBadge(int count) {
-    Utils.sendEvent(reactContext, Const.EVENT_ON_CHANGE_BADGE, ConvertUtils.createSingleMap(Const.KEY_COUNT, count));
+    Utils.sendEvent(reactContext, Const.EVENT_ON_CHANGE_BADGE, ParseUtils.createSingleMap(Const.KEY_COUNT, count));
   }
 
   @Override
   public void onReceivePush(PushEvent pushEvent) {
-    Utils.sendEvent(reactContext, Const.EVENT_ON_RECEIVE_PUSH, ConvertUtils.pushEventToWritableMap(pushEvent));
+    Utils.sendEvent(reactContext, Const.EVENT_ON_RECEIVE_PUSH, ParseUtils.pushEventToWritableMap(pushEvent));
   }
 
   @Override
   public boolean onClickChatLink(String url) {
-    Utils.sendEvent(reactContext, Const.EVENT_ON_CLICK_CHAT_LINK, ConvertUtils.createSingleMap(Const.KEY_URL, url));
+    Utils.sendEvent(reactContext, Const.EVENT_ON_CLICK_CHAT_LINK, ParseUtils.createSingleMap(Const.KEY_URL, url));
     return handleChatLink;
   }
 }
