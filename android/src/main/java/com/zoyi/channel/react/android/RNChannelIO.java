@@ -72,7 +72,11 @@ public class RNChannelIO extends ReactContextBaseJavaModule implements ChannelPl
 
   @ReactMethod
   public void initPushToken(String tokenData) {
-    PrefSupervisor.setDeviceToken(getCurrentActivity(), tokenData);
+    Context context = getCurrentActivity();
+
+    if (context != null){
+      PrefSupervisor.setDeviceToken(context, tokenData);
+    }
   }
 
   @ReactMethod
